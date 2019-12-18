@@ -1,7 +1,7 @@
 ---
-name: "\U0001F525 Security bug report"
+name: "\U0001F525 Security bug report \U0001F525"
 about: How to report security vulnerabilities
-title: ''
+title: "[SECURITY]"
 labels: ''
 assignees: ''
 
