@@ -1,5 +1,5 @@
 ---
-name: :bug: Bug report
+name: ":ant: Bug report :ant:"
 about: Create a report to help us improve
 title: "[BUG]"
 labels: ''
@@ -7,7 +7,7 @@ assignees: ''
 ---
 <!--- Verify first that your issue is not already reported on GitHub -->
 
-##### :bug: SUMMARY :bug:
+##### :ant: SUMMARY :ant:
 
 <!--- Explain the problem briefly below -->
 
