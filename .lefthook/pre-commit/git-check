@@ -22,7 +22,6 @@ basic_git_checks() {
       exit 1
   fi
 
-  git interpret-trailers --no-divider --if-exists doNothing --trailer "Signed-off-by: $NAME <$EMAIL>" --in-place "$1"
 }
 
 # Basic checks

@@ -17,3 +17,5 @@ check_commit_prefix() {
       exit 1
   fi
 }
+
+git interpret-trailers --no-divider --if-exists doNothing --trailer "Signed-off-by: $NAME <$EMAIL>" --in-place "$1"
