@@ -33,7 +33,10 @@ check_protected_branches() {
   # only check commit messages on main development branch
   for branch in "${protected_branches[@]}"
   do
-    [ "$current_branch" = "$branch" ] && exit 0
+    if [ "$current_branch" = "$branch" ]; then
+      echo -e "  Current branch ${current_branch} matches a protected branch.\n  Please change the branch and commit again."
+      exit 1
+    fi
   done
 }
 
@@ -47,15 +50,13 @@ check_for_jira_ticket() {
     --header 'Accept: application/json')
   
   if [ "$web_check" -ne 200 ]; then
-    echo "Branch name does not match an existing Jira ticket ID.\
-      Please double check and confirm that you have permission\
-       to view the ticket."
+    echo -e "  Branch name does not match an existing Jira ticket ID.\n  Please double check and confirm that you have permission to view the ticket."
     exit 1
   fi
 }
 
 # Check if we're trying to commit to a protected branch
-check_protected_branches
+check_protected_branches "$protected_branches"
 
 if [ -z "$JIRA_TOKEN" ] && [ -z "$JIRA_DOMAIN" ]; then
   echo "JIRA_TOKEN and JIRA DOMAIN were not defined\
@@ -68,9 +69,11 @@ elif [ -z "$JIRA_DOMAIN" ]; then
   echo "JIRA_DOMAIN was not defined in your shell, but\
    JIRA_TOKEN was found.  Please check your environment."
 else
-  check_for_jira_ticket
+  if ! echo "$current_branch" | grep "NO-TICKET" &> /dev/null; then
+    check_for_jira_ticket
+  fi
 fi
 
-if grep "git\@github.com" "${current_origin}"; then
-  echo "Checking for Github configuration checks..."
-fi
+# if echo "${current_origin}" | grep "git\@github.com" &> /dev/null; then
+#   echo "  Checking for Github configuration checks..."
+# fi
