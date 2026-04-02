@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: MIT-0
+---
+- name: Verify
+  hosts: all
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Verify /etc/os-release exists
+      ansible.builtin.stat:
+        path: /etc/os-release
+      register: os_release
+
+    - name: Assert /etc/os-release exists
+      ansible.builtin.assert:
+        that:
+          - os_release.stat.exists
+          - os_release.stat.isreg
+        fail_msg: "/etc/os-release does not exist or is not a regular file."

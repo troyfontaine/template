@@ -1,0 +1,14 @@
+---
+# Purpose: bring the instance to the desired state
+# Molecule calls this playbook with `molecule converge`.
+- name: Prepare
+  hosts: instance
+  gather_facts: true # Disable if your role does not rely on facts
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        upgrade: dist
+        update_cache: true
+        cache_valid_time: 3600
+        autoremove: true
+        autoclean: true

@@ -1,13 +1,15 @@
 pre-commit:
-  commands:
-  scripts:
-    "git-check":
+  jobs:
+    - script: git-check
       runner: bash
-    "branch-check":
-      runner: bash
+    - name: Lint Ansible
+      run: ansible-lint .
+    - name: Run Molecule tests
+      run: molecule test -s default
 
-commit-msg:
-  commands:
-    scripts:
-      "commit-check":
-        runner: bash
+checks:
+  jobs:
+    - name: Lint Ansible
+      run: ansible-lint .
+    - name: Run Molecule tests
+      run: molecule test -s default
